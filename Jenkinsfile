@@ -4,7 +4,7 @@ pipeline {
         stage('Descargar Código') {
             steps {
                 echo 'Clonando el repositorio...'
-                git branch: 'desarrollo', url: 'https://github.com/carlosjdiez/proyecto-devsecops.git'
+                git branch: 'desarrollo', url: 'https://github.com/TU_USUARIO/proyecto-devsecops.git'
             }
         }
         stage('Construir Imagen (Build)') {
@@ -17,7 +17,7 @@ pipeline {
             steps {
                 echo 'Buscando vulnerabilidades CRÍTICAS...'
                 // Ejecutamos Trivy. Si falla, el pipeline se corta aquí.
-                sh 'docker run --rm -v /var/run/docker.sock:/var/run/docker.sock ghcr.io/aquasecurity/trivy:latest image --exit-code 1 --severity CRITICAL mi-app-segura:latest'
+                sh 'docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image --exit-code 1 --severity CRITICAL mi-app-segura:latest'
             }
         }
         stage('Despliegue en Producción (CD)') {
